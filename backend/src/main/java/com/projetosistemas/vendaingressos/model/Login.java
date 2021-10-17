@@ -1,4 +1,4 @@
-package com.projetosistemas.vendaingressos.entity;
+package com.projetosistemas.vendaingressos.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

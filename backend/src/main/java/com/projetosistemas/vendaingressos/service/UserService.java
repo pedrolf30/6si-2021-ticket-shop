@@ -1,12 +1,11 @@
 package com.projetosistemas.vendaingressos.service;
 
-import com.projetosistemas.vendaingressos.entity.Login;
+import com.projetosistemas.vendaingressos.model.Login;
 import com.projetosistemas.vendaingressos.entity.Role;
 import com.projetosistemas.vendaingressos.entity.User;
-import com.projetosistemas.vendaingressos.exception.RoleNotFoundException;
 import com.projetosistemas.vendaingressos.exception.UserAuthenticationFailedException;
-import com.projetosistemas.vendaingressos.exception.UserNotFoundException;
-import com.projetosistemas.vendaingressos.exception.UserNotSavedException;
+import com.projetosistemas.vendaingressos.exception.ResourceNotFoundException;
+import com.projetosistemas.vendaingressos.exception.ResourceNotSavedException;
 import com.projetosistemas.vendaingressos.repository.RoleRepository;
 import com.projetosistemas.vendaingressos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +28,17 @@ public class UserService {
         return ResponseEntity.ok().body(user);
     }
 
-    public ResponseEntity<User> getUserById(Long id) throws UserNotFoundException {
+    public ResponseEntity<User> getUserById(Long id) throws ResourceNotFoundException {
         User user = verifyIfExists(id);
 
         return ResponseEntity.ok().body(user);
     }
 
-    public ResponseEntity<User> createUser(User user) throws UserNotSavedException, RoleNotFoundException {
-        user.setRole(verifyIfExists(user.getRole()));
+    public ResponseEntity<User> createUser(User user) throws ResourceNotSavedException {
         User savedUser = userRepository.save(user);
 
         if (savedUser == null)
-            throw new UserNotSavedException(savedUser);
+            throw new ResourceNotSavedException(savedUser);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
@@ -48,17 +46,16 @@ public class UserService {
     public ResponseEntity<User> updateUser(Long id, User user) throws Exception {
         verifyIfExists(id);
         user.setId(id);
-        user.setRole(verifyIfExists(user.getRole()));
 
         User updatedUser = userRepository.save(user);
 
         if (updatedUser == null)
-            throw new UserNotSavedException(updatedUser);
+            throw new ResourceNotSavedException(updatedUser);
 
         return ResponseEntity.ok().body(updatedUser);
     }
 
-    public ResponseEntity<String> deleteUser(Long id) throws UserNotFoundException {
+    public ResponseEntity<String> deleteUser(Long id) throws ResourceNotFoundException {
         verifyIfExists(id);
         userRepository.deleteById(id);
 
@@ -70,13 +67,8 @@ public class UserService {
                 .orElseThrow(() -> new UserAuthenticationFailedException());
     }
 
-    private User verifyIfExists(Long id) throws UserNotFoundException {
+    private User verifyIfExists(Long id) throws ResourceNotFoundException {
         return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
-    }
-
-    private Role verifyIfExists(Role role) throws RoleNotFoundException {
-        return roleRepository.findByIdOrRole(role.getId(), role.getRole())
-                .orElseThrow(() -> new RoleNotFoundException());
+                .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 }

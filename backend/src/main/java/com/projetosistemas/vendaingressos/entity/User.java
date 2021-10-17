@@ -1,17 +1,14 @@
 package com.projetosistemas.vendaingressos.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 @Data
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tb_usuario")
@@ -46,15 +43,4 @@ public class User {
 
     @Column(name = "senha", nullable = false)
     private String senha;
-
-    @Override
-    public String toString() {
-        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-
-        return String.format("Usuario [id=%d, nome=%s, cpfCnpj=%s, telefoneContato=%s"
-                + ", fotoPerfil=%s, dataNascimento=%s, email=%s, senha=%s",
-                id, nome, cpfCnpj, telefoneContato, fotoPerfil,
-                fmt.format(dataNascimento), email, senha)
-                + ", role=" + role.toString() + "]";
-    }
 }
