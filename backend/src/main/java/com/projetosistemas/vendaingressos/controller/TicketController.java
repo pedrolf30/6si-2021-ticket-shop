@@ -22,6 +22,11 @@ public class TicketController {
         return ticketService.listAll();
     }
 
+    @GetMapping("/tickets/users/{id}")
+    public ResponseEntity<List<Ticket>> getTicketsByOrganizerId(@PathVariable Long organizerId) {
+        return ticketService.getTicketsByOrganizerId(organizerId);
+    }
+
     @GetMapping("/tickets/{id}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable Long id) throws ResourceNotFoundException {
         return ticketService.getTicketById(id);

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,12 +24,19 @@ public class TicketService {
         return ResponseEntity.ok().body(tickets);
     }
 
+    public ResponseEntity<List<Ticket>> getTicketsByOrganizerId(Long organizerId) {
+        List<Ticket> tickets = ticketRepository.findByUserId(organizerId);
+
+        return ResponseEntity.ok().body(tickets);
+    }
+
     public ResponseEntity<Ticket> getTicketById(Long id) throws ResourceNotFoundException {
         Ticket ticket = verifyIfExists(id);
 
         return ResponseEntity.ok().body(ticket);
     }
 
+    @Transactional
     public ResponseEntity<Ticket> createTicket(Ticket ticket) throws ResourceNotSavedException {
         Ticket savedTicket = ticketRepository.save(ticket);
 
@@ -38,6 +46,7 @@ public class TicketService {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedTicket);
     }
 
+    @Transactional
     public ResponseEntity<Ticket> updateTicket(Long id, Ticket ticket) throws Exception {
         verifyIfExists(id);
         ticket.setId(id);
@@ -50,6 +59,7 @@ public class TicketService {
         return ResponseEntity.ok().body(updatedTicket);
     }
 
+    @Transactional
     public ResponseEntity<String> deleteTicket(Long id) throws ResourceNotFoundException {
         verifyIfExists(id);
         ticketRepository.deleteById(id);

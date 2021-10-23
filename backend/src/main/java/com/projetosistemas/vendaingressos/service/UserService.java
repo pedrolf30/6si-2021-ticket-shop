@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -34,6 +35,7 @@ public class UserService {
         return ResponseEntity.ok().body(user);
     }
 
+    @Transactional
     public ResponseEntity<User> createUser(User user) throws ResourceNotSavedException {
         User savedUser = userRepository.save(user);
 
@@ -43,6 +45,7 @@ public class UserService {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
+    @Transactional
     public ResponseEntity<User> updateUser(Long id, User user) throws Exception {
         verifyIfExists(id);
         user.setId(id);
@@ -55,6 +58,7 @@ public class UserService {
         return ResponseEntity.ok().body(updatedUser);
     }
 
+    @Transactional
     public ResponseEntity<String> deleteUser(Long id) throws ResourceNotFoundException {
         verifyIfExists(id);
         userRepository.deleteById(id);

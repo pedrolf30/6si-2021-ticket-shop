@@ -21,7 +21,7 @@ public class Ticket {
 
     @ManyToOne(optional=false)
     @JoinColumn(name="id_organizador")
-    private User user;
+    private User organizer;
 
     @Column(name = "nome", nullable = false)
     private String nome;
