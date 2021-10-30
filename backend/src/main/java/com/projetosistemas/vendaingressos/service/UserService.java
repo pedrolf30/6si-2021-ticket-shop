@@ -37,6 +37,7 @@ public class UserService {
 
     @Transactional
     public ResponseEntity<User> createUser(User user) throws ResourceNotSavedException {
+        createRoles();
         User savedUser = userRepository.save(user);
 
         if (savedUser == null)
@@ -47,6 +48,7 @@ public class UserService {
 
     @Transactional
     public ResponseEntity<User> updateUser(Long id, User user) throws Exception {
+        createRoles();
         verifyIfExists(id);
         user.setId(id);
 
@@ -74,5 +76,10 @@ public class UserService {
     private User verifyIfExists(Long id) throws ResourceNotFoundException {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
+    private void createRoles() {
+        roleRepository.save(new Role(1L, "Vendedor"));
+        roleRepository.save(new Role(2L, "Comprador"));
     }
 }

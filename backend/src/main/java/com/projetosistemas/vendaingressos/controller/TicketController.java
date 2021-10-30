@@ -18,13 +18,13 @@ public class TicketController {
     private TicketService ticketService;
 
     @GetMapping("/tickets")
-    public ResponseEntity<List<Ticket>> listAll() {
-        return ticketService.listAll();
+    public ResponseEntity<List<Ticket>> getTicketsAvailable() {
+        return ticketService.getTicketsAvailable();
     }
 
-    @GetMapping("/tickets/users/{id}")
-    public ResponseEntity<List<Ticket>> getTicketsByOrganizerId(@PathVariable Long organizerId) {
-        return ticketService.getTicketsByOrganizerId(organizerId);
+    @GetMapping("/tickets/organizers/{id}")
+    public ResponseEntity<List<Ticket>> getTicketsByOrganizerId(@PathVariable Long id) {
+        return ticketService.getTicketsByOrganizerId(id);
     }
 
     @GetMapping("/tickets/{id}")

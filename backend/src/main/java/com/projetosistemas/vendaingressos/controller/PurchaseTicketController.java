@@ -18,18 +18,18 @@ public class PurchaseTicketController {
     private PurchaseTicketService purchaseTicketService;
 
     @GetMapping("/purchases/tickets/purchases/{id}")
-    public ResponseEntity<List<PurchaseTicket>> getPurchaseTicketsByPurchaseId(@PathVariable Long purchaseId) {
-        return purchaseTicketService.getPurchaseTicketsByPurchaseId(purchaseId);
+    public ResponseEntity<List<PurchaseTicket>> getPurchaseTicketsByPurchaseId(@PathVariable Long id) {
+        return purchaseTicketService.getPurchaseTicketsByPurchaseId(id);
     }
 
-    @GetMapping("/purchases/tickets/users/{id}")
-    public ResponseEntity<List<PurchaseTicket>> getPurchaseTicketsByPurchaserId(@PathVariable Long purchaserId) {
-        return purchaseTicketService.getPurchaseTicketsByPurchaserId(purchaserId);
+    @GetMapping("/purchases/tickets/purchasers/{id}")
+    public ResponseEntity<List<PurchaseTicket>> getPurchaseTicketsByPurchaserId(@PathVariable Long id) {
+        return purchaseTicketService.getPurchaseTicketsByPurchaserId(id);
     }
 
-    @GetMapping("/purchases/tickets/users/{id}")
-    public ResponseEntity<List<PurchaseTicket>> getPurchaseTicketsBySellerId(@PathVariable Long sellerId) {
-        return purchaseTicketService.getPurchaseTicketsBySellerId(sellerId);
+    @GetMapping("/purchases/tickets/sellers/{id}")
+    public ResponseEntity<List<PurchaseTicket>> getPurchaseTicketsBySellerId(@PathVariable Long id) {
+        return purchaseTicketService.getPurchaseTicketsBySellerId(id);
     }
 
     @GetMapping("/purchases/tickets/{id}")
@@ -38,7 +38,7 @@ public class PurchaseTicketController {
     }
 
     @PostMapping("/purchases/tickets")
-    public ResponseEntity<PurchaseTicket> createPurchaseTicket(@RequestBody PurchaseTicket purchaseTicket) throws ResourceNotSavedException {
+    public ResponseEntity<PurchaseTicket> createPurchaseTicket(@RequestBody PurchaseTicket purchaseTicket) throws Exception {
         return purchaseTicketService.createPurchaseTicket(purchaseTicket);
     }
 

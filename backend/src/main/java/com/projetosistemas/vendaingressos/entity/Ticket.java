@@ -30,7 +30,7 @@ public class Ticket {
     private Date data;
 
     @Column(name = "horario", nullable = false)
-    private Date horario;
+    private String horario;
 
     @Column(name = "endereco", nullable = false)
     private String endereco;

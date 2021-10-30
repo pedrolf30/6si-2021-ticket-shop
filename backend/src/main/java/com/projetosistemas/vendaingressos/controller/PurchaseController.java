@@ -18,8 +18,8 @@ public class PurchaseController {
     private PurchaseService purchaseService;
 
     @GetMapping("/purchases/users/{id}")
-    public ResponseEntity<List<Purchase>> getPurchasesByUserId(@PathVariable Long userId) {
-        return purchaseService.getPurchasesByUserId(userId);
+    public ResponseEntity<List<Purchase>> getPurchasesByUserId(@PathVariable Long id) {
+        return purchaseService.getPurchasesByUserId(id);
     }
 
     @GetMapping("/purchases/{id}")
