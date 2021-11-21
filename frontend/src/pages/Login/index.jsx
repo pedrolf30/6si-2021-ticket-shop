@@ -1,20 +1,19 @@
 //styled components
 import {
-    StyledTextInput,
     StyledFormButton,
     StyledFormsArea,
-    StyledLabel,
     StyledTitle,
     colors,
     ButtonGroup,
     ExtraText,
     TextLink,
     CopyrightText,
-} from "../Styles";
+    StyledContainer,
+} from "../../components/Styles";
 
 //formik
 import { Formik, Form } from "formik";
-import { TextInput } from "../FormLib";
+import { TextInput } from "../../components/FormLib";
 import * as Yup from 'yup';
 
 //icons
@@ -32,7 +31,7 @@ const Login = ({ loginUser }) => {
     const history = useNavigate();
 
     return (
-        <div>
+        <StyledContainer>
             <StyledFormsArea>
                 <StyledTitle
                     color={colors.theme}
@@ -99,8 +98,7 @@ const Login = ({ loginUser }) => {
                     <TextLink to="/signup"> Se cadastre.</TextLink>
                 </ExtraText>
             </StyledFormsArea>
-            <CopyrightText>Desenvolvido por Pedro Ferrareso, 2021</CopyrightText>
-        </div>
+        </StyledContainer>
     );
 }
 

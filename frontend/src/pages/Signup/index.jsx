@@ -7,11 +7,12 @@ import {
     ButtonGroup,
     ExtraText,
     TextLink,
-} from "../Styles";
+    StyledContainer,
+} from "../../components/Styles";
 
 //formik
 import { Formik, Form } from "formik";
-import { TextInput } from "../FormLib";
+import { TextInput } from "../../components/FormLib";
 import * as Yup from 'yup';
 
 //icons
@@ -30,7 +31,7 @@ const Signup = ({ signupUser }) => {
     const history = useNavigate();
 
     return (
-        <div>
+        <StyledContainer>
             <StyledFormsArea>
                 <StyledTitle
                     color={colors.theme}
@@ -157,7 +158,7 @@ const Signup = ({ signupUser }) => {
                     <TextLink to="/login"> Faça o login.</TextLink>
                 </ExtraText>
             </StyledFormsArea>
-        </div>
+        </StyledContainer>
     );
 }
 

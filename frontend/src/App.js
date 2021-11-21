@@ -1,8 +1,8 @@
 import React from 'react';
 //pages
-import Home from './components/pages/Home';
-import Login from './components/pages/Login';
-import Signup from './components/pages/Signup';
+import Home from './pages/Home/index.jsx';
+import Login from './pages/Login/index.jsx';
+import Signup from './pages/Signup/index.jsx';
 
 //styled components
 import { StyledContainer } from './components/Styles';
@@ -15,14 +15,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 const App = () => {
   return (
     <Router>
-      <StyledContainer>
+      <div>
         <Routes>
-          <Route exact path='/' element={<Home/>}>
-          </Route>
+          <Route exact path='/' element={<Home />} />
           <Route exact path='/signup' element={<Signup/>}/>
           <Route exact path='/login' element={<Login/>}/>
           </Routes>
-      </StyledContainer>
+      </div>
     </Router>
   );
 }
