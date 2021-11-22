@@ -9,6 +9,7 @@ import {
     TextLink,
     StyledContainer,
 } from "../../components/Styles";
+import styled from 'styled-components'
 
 //formik
 import { Formik, Form } from "formik";
@@ -16,7 +17,7 @@ import { TextInput } from "../../components/FormLib";
 import * as Yup from 'yup';
 
 //icons
-import { FiMail, FiLock, FiUser, FiCalendar, FiPhone } from 'react-icons/fi';
+import { FiMail, FiLock, FiUser, FiCalendar, FiPhone, FiCamera } from 'react-icons/fi';
 import {HiOutlineIdentification} from 'react-icons/hi'
 
 //Loader
@@ -24,28 +25,74 @@ import Loader from "react-loader-spinner";
 
 import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
+const ExitButtonContainer = styled.div`
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: flex-end;
+`
+const ExitButton = styled.button`
+    background-color:transparent;
+    border: 1px solid red;
+    border-radius: 25px;
+    color: red;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+
+    &:hover{
+        background-color: red;
+        color: #fff;
+        cursor: pointer;
+    }
+`
+const SaveButton = styled.button`
+    padding: 10px;
+    margin: 10px;
+    width: 150px;
+    height: 45px;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: bold;
+    border: 3px solid #00a000;
+    border-radius: 25px;
+    color: #00a000;
+    text-decoration: none;
+    text-align: center;
+    transition: ease-in-out 0.3s;
+    outline: 0;
+
+    &:hover{
+        background-color: #00a000;
+        color: #fff;
+        cursor: pointer;
+    }
+
+`
+const EditProfile = ({userData,closeModal}) => {
     const history = useNavigate();
 
     return (
         <StyledContainer>
             <StyledFormsArea>
+                <ExitButtonContainer>
+                    <ExitButton onClick={() => {closeModal(false)}}> X </ExitButton>
+                </ExitButtonContainer>
                 <StyledTitle
-                    color={colors.theme}
+                    color="#000"
                     size={30}
                 >
-                    Cadastro
+                    EDITAR PERFIL
                 </StyledTitle>
                 <Formik
                     initialValues={{
-                        email: "",
+                        email: userData.email,
                         senha: "",
                         repetirSenha: "",
-                        dataNascimento: "",
-                        nome: "",
-                        cpfCpnj: "",
-                        telefoneContato: "",
-
+                        dataNascimento: userData.dataNascimento,
+                        nome: userData.nome,
+                        cpfCpnj: userData.cpfCnpj,
+                        telefoneContato: userData.telefoneContato,
                     }}
                 >
                     <Form>
@@ -105,26 +152,22 @@ const Signup = () => {
                         />
 
                         <TextInput
-                            name="tipo_usuario"
+                            name="foto_perfil"
                             type="text"
-                            label="Tipo de usuário"
-                            placeholder="Escolha uma opção"
-                            icon={<FiLock/>}
+                            label="Foto de Perfil"
+                            placeholder="Insira a URL da foto"
+                            icon={<FiCamera/>}
                         />
                         <ButtonGroup>
-                            <StyledFormButton type="submit">
-                                Cadastrar
-                            </StyledFormButton>
+                            <SaveButton type="submit">
+                                Salvar
+                            </SaveButton>
                         </ButtonGroup>
                     </Form>
                 </Formik>
-                <ExtraText>
-                    Já tem cadastro?
-                    <TextLink to="/login"> Faça o login.</TextLink>
-                </ExtraText>
             </StyledFormsArea>
         </StyledContainer>
     );
 }
 
-export default Signup;
+export default EditProfile;

@@ -9,26 +9,78 @@ import {
     TextLink,
     CopyrightText,
     StyledContainer,
+    ErrorMsg,
 } from "../../components/Styles";
 
 //formik
 import { Formik, Form } from "formik";
 import { TextInput } from "../../components/FormLib";
-import * as Yup from 'yup';
 
 //icons
 import { FiMail, FiLock } from 'react-icons/fi';
 
-//Loader
-import Loader from "react-loader-spinner";
+import React, { useState } from 'react';
 
-//Auth redux
-import { connect } from "react-redux";
-import { loginUser } from "../../auth/actions/userActions";
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ loginUser }) => {
-    const history = useNavigate();
+import axios from 'axios';
+
+import { AuthContext } from '../../providers/auth';
+
+
+const initialState = {
+    email: '',
+    senha: '',
+};
+
+
+
+const Login = () => {
+    const { user, setUser } = React.useContext(AuthContext);
+
+    const navigate = useNavigate();
+
+    const [values, setValues] = useState(initialState);
+    const [error, setError] = useState(false);
+
+    const loginApi = async (email, senha) => {
+        let resultado = false;
+        await axios.post('http://localhost:8080/api/v1/login', {
+            email,
+            senha,
+        }).then((res) => {
+            setUser(res);
+            resultado = true;
+        }).catch((err) => {
+            console.log(err);
+            resultado = false;
+        });
+
+        return resultado;
+
+    };
+
+    function onChange(e){
+        const { name, value } = e.target;
+
+        setValues({
+            ...values,
+            [name]: value,
+        });
+    }
+
+    async function onSubmit(e){
+        e.preventDefault();
+        const resultadoLogin = await loginApi(values.email, values.senha);
+        
+        if(resultadoLogin){
+            navigate('/');
+        }
+
+        setError(true);
+        setValues(initialState);
+    }
+
 
     return (
         <StyledContainer>
@@ -44,54 +96,40 @@ const Login = ({ loginUser }) => {
                         email: "",
                         senha: "",
                     }}
-                    validationSchema={
-                        Yup.object({
-                            email: Yup.string().email("E-mail inválido").required("Obrigatório"),
-                            senha: Yup.string().max(30, "Senha é muito longa").required("Obrigatório"),
-                        })
-                    }
-                    onSubmit={(values, {setSubmitting, setFieldError}) => {
-                        loginUser(values, history, setFieldError, setSubmitting);
-                    }}
                 >
-                    {({isSubmitting}) => (
-                        <Form>
-                            <TextInput
-                                name="email"
-                                type="text"
-                                label="E-mail"
-                                placeholder="Digite seu e-mail"
-                                icon={<FiMail/>}
-                            />
+                    <Form onSubmit={onSubmit}>
+                        <TextInput
+                            name="email"
+                            type="text"
+                            label="E-mail"
+                            placeholder="Digite seu e-mail"
+                            icon={<FiMail/>}
+                            onChange={onChange}
+                            value={values.email}
+                        />
 
-                            <TextInput
-                                name="senha"
-                                type="password"
-                                label="Senha"
-                                placeholder="Digite sua senha"
-                                icon={<FiLock/>}
-                            />
-
-                            <ButtonGroup>
-                                {!isSubmitting &&
-                                (
-                                    <StyledFormButton type="submit">
-                                        Login
-                                    </StyledFormButton>
-                                )
-                                }
-
-                                {isSubmitting && (
-                                    <Loader
-                                        type="ThreeDots"
-                                        color={colors.theme}
-                                        height={49}
-                                        width={100}
-                                    />
-                                )}
-                            </ButtonGroup>
-                        </Form>
-                    )}
+                        <TextInput
+                            name="senha"
+                            type="password"
+                            label="Senha"
+                            placeholder="Digite sua senha"
+                            icon={<FiLock/>}
+                            onChange={onChange}
+                            value={values.senha}
+                        />
+                        {error && 
+                            <ErrorMsg>
+                                Email ou senha incorretos!
+                            </ErrorMsg>
+                        }
+                        <ButtonGroup>
+                                <StyledFormButton 
+                                    type="submit"
+                                >
+                                    Login
+                                </StyledFormButton>
+                        </ButtonGroup>
+                    </Form>
                 </Formik>
                 <ExtraText>
                     Ainda não tem cadastro?
@@ -102,4 +140,4 @@ const Login = ({ loginUser }) => {
     );
 }
 
-export default connect(null, {loginUser})(Login);
+export default Login;

@@ -3,6 +3,8 @@ import React from 'react';
 import Home from './pages/Home/index.jsx';
 import Login from './pages/Login/index.jsx';
 import Signup from './pages/Signup/index.jsx';
+import Profile from './pages/Profile/index.jsx';
+import PurchaseHistory from './pages/PurchaseHistory/index.jsx';
 
 //styled components
 import { StyledContainer } from './components/Styles';
@@ -20,7 +22,9 @@ const App = () => {
           <Route exact path='/' element={<Home />} />
           <Route exact path='/signup' element={<Signup/>}/>
           <Route exact path='/login' element={<Login/>}/>
-          </Routes>
+          <Route exact path='/profile' element={<Profile/>}/>
+          <Route exact path='/purchase-history' element={<PurchaseHistory/>}/>
+        </Routes>
       </div>
     </Router>
   );

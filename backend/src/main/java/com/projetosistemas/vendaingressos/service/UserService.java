@@ -78,7 +78,7 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    private void createRoles() {
+    public void createRoles() {
         roleRepository.save(new Role(1L, "Vendedor"));
         roleRepository.save(new Role(2L, "Comprador"));
     }

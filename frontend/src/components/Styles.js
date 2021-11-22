@@ -121,7 +121,6 @@ export const StyledFormButton = styled.button`
 export const ErrorMsg = styled.div`
     font-size: 11px;
     color: ${colors.red};
-    margin-top: -5px;
     margin-bottom: 10px;
     text-align: left;
 `;

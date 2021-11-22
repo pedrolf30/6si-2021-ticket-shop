@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../providers/auth';
 
 const Container = styled.div`
     height: 60px;
@@ -46,6 +47,16 @@ const MenuItem = styled(Link)`
 `
 
 const NavBar = () => {
+    const {user, setUser, isLogged, setIsLogged} = React.useContext(AuthContext);
+
+    if(user.data){
+        setIsLogged(true);
+    }
+        
+    if(user.data === undefined){
+        setIsLogged(false);
+    }
+
     return (
         <Container>
             <Wrapper>
@@ -54,8 +65,28 @@ const NavBar = () => {
                     <Logo>INGRESSOS</Logo>
                 </Center>
                 <Right>
-                    <MenuItem to="/signup">CADASTRE-SE</MenuItem>
-                    <MenuItem to="/login">LOGIN</MenuItem>
+                    { !isLogged &&
+                        <>
+                            <MenuItem to="/signup">CADASTRE-SE</MenuItem>
+                            <MenuItem to="/login">LOGIN</MenuItem>
+                        </>
+                    }
+                    { isLogged &&
+                        <>
+                            <MenuItem to="/profile">MINHA CONTA</MenuItem>
+                            <MenuItem to="/purchase-history">HISTÓRICO COMPRAS</MenuItem>
+                            <MenuItem to="/shopping-kart">CARRINHO</MenuItem>
+                            <MenuItem 
+                                to="/" 
+                                onClick={() => {
+                                    setIsLogged(false);
+                                    setUser({});
+                                }}
+                            >
+                                SAIR
+                            </MenuItem>
+                        </>
+                    }
                 </Right>
             </Wrapper>
         </Container>

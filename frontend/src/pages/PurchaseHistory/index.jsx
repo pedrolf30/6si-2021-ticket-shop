@@ -1,13 +1,22 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState, useEffect, useCallback } from 'react';
+import styled from 'styled-components';
 import { Filter } from "../../components/Filter/index.jsx";
 import Footer from "../../components/Footer/index.jsx";
-import TicketDetails from "../../components/TicketDetails/index.jsx";
-import { LoadMoreButton } from "../../components/LoadMoreButton/index.jsx";
 import NavBar from "../../components/Navbar/index.jsx";
+import TicketDetails from "../../components/TicketDetails/index.jsx";
 import Tickets from "../../components/Tickets/index.jsx";
+import { LoadMoreButton } from "../../components/LoadMoreButton/index.jsx";
 import { ticketList } from '../../data';
 
-const Home = () => {
+
+const Title = styled.p`
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 5px;
+`
+
+function PurchaseHistory() {
     const [tickets, setTickets] = useState([]);
     const [allTickets, setAllTickets] = useState([]);
     const [page, setPage] = useState(0);
@@ -45,19 +54,19 @@ const Home = () => {
     }
 
     const handleLoadTickets = useCallback(async (page, ticketsPerPage) => {
-        const tickets = ticketList;
+        /* const tickets = ticketList;
 
         setTickets(tickets.slice(page, ticketsPerPage));
-        setAllTickets(tickets);
+        setAllTickets(tickets); */
     }, [])
 
     const loadMoreTickets = async () => {
-        const nextPage = page + ticketsPerPage;
+        /* const nextPage = page + ticketsPerPage;
         const nextTickets = allTickets.slice(nextPage, (nextPage + ticketsPerPage));
         tickets.push(...nextTickets);
 
         setTickets(tickets);
-        setPage(nextPage);
+        setPage(nextPage); */
     }
 
     const handleChange = (e) => {
@@ -75,10 +84,10 @@ const Home = () => {
     }, [handleLoadTickets, ticketsPerPage]);
 
     const noMoreTicketsToLoad = page + ticketsPerPage >= allTickets.length;
-    
     return (
         <div>
-            <NavBar/>
+           <NavBar/>
+           <Title>MEU HISTÓRICO DE COMPRAS</Title>
             <div>
                 {!openModal && <Filter
                     searchValue={searchValue}
@@ -93,14 +102,14 @@ const Home = () => {
                     />
                 )}
                 {filterIntersection.length === 0 && (
-                    <p>Nenhum ticket foi encontrado ;-;</p>
+                    <p>Nenhum ticket foi comprado por você ;-;</p>
                 )}
             </div>
             {openModal && <TicketDetails details={ticketDetail} closeModal={setOpenModal}/>}
             {!openModal && <LoadMoreButton onClick={loadMoreTickets} disabled={noMoreTicketsToLoad}/>}
-            <Footer/>
+            <Footer/> 
         </div>
-    );
+    )
 }
 
-export default Home
+export default PurchaseHistory

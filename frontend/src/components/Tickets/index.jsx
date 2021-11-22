@@ -14,9 +14,7 @@ export const Tickets = ({openModal, tickets = [], tDetails}) => {
     return (
         <Container>
             {tickets.map((item) => (
-                <div>
-                    <TicketCard details={tDetails} open={() => {openModal(true)}} item={ item } key={ item.idIngresso } />
-                </div>
+                <TicketCard details={tDetails} open={() => {openModal(true)}} item={ item } key={ item.idIngresso } />
             ))}
         </Container>
     )

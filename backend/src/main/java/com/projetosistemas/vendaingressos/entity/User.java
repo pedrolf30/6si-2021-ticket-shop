@@ -19,7 +19,7 @@ public class User {
     @Column(name="id_usuario")
     private Long id;
 
-    @ManyToOne(optional=false)
+    @ManyToOne()
     @JoinColumn(name="id_role")
     private Role role;
 
