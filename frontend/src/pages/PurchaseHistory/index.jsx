@@ -11,7 +11,7 @@ import { ticketList } from '../../data';
 
 const Title = styled.p`
     text-align: center;
-    font-size: 30px;
+    font-size: 24px;
     font-weight: bold;
     margin: 5px;
 `

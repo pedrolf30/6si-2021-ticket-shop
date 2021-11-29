@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../providers/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     height: 60px;
@@ -28,6 +29,7 @@ const Center = styled.div`
 const Logo = styled.h1`
     font-weight: bold;
     color: #000;
+    cursor: pointer;
 `
 
 const Right = styled.div`
@@ -48,6 +50,7 @@ const MenuItem = styled(Link)`
 
 const NavBar = () => {
     const {user, setUser, isLogged, setIsLogged} = React.useContext(AuthContext);
+    const navigate = useNavigate();
 
     if(user.data){
         setIsLogged(true);
@@ -57,12 +60,16 @@ const NavBar = () => {
         setIsLogged(false);
     }
 
+    function onClick() {
+        navigate('/');
+    }
+
     return (
         <Container>
             <Wrapper>
                 <Left></Left>
                 <Center>
-                    <Logo>INGRESSOS</Logo>
+                    <Logo onClick={ onClick }>INGRESSOS</Logo>
                 </Center>
                 <Right>
                     { !isLogged &&
@@ -71,11 +78,26 @@ const NavBar = () => {
                             <MenuItem to="/login">LOGIN</MenuItem>
                         </>
                     }
-                    { isLogged &&
+                    { isLogged && user.data.role.role === "Comprador" &&
                         <>
                             <MenuItem to="/profile">MINHA CONTA</MenuItem>
                             <MenuItem to="/purchase-history">HISTÓRICO COMPRAS</MenuItem>
                             <MenuItem to="/shopping-kart">CARRINHO</MenuItem>
+                            <MenuItem 
+                                to="/" 
+                                onClick={() => {
+                                    setIsLogged(false);
+                                    setUser({});
+                                }}
+                            >
+                                SAIR
+                            </MenuItem>
+                        </>
+                    }
+                    { isLogged && user.data.role.role === "Vendedor" &&
+                        <>
+                            <MenuItem to="/profile">MINHA CONTA</MenuItem>
+                            <MenuItem to="/created-tickets">MEUS INGRESSOS</MenuItem>
                             <MenuItem 
                                 to="/" 
                                 onClick={() => {

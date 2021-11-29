@@ -96,7 +96,11 @@ const Home = () => {
                     <p>Nenhum ticket foi encontrado ;-;</p>
                 )}
             </div>
-            {openModal && <TicketDetails details={ticketDetail} closeModal={setOpenModal}/>}
+            {openModal && <TicketDetails
+                details={ticketDetail}
+                closeModal={setOpenModal}
+                btnName={ "Comprar" }
+            />}
             {!openModal && <LoadMoreButton onClick={loadMoreTickets} disabled={noMoreTicketsToLoad}/>}
             <Footer/>
         </div>

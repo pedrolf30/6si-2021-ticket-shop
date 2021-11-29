@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { format, parseISO } from 'date-fns';
+import { AuthContext } from '../../providers/auth';
 
 const ModalBackground = styled.div`
     margin-top: 22px;
@@ -112,7 +114,8 @@ const CancelButton = styled.button`
     }
 `
 
-export const TicketDetails = ({details,closeModal}) => {
+export const TicketDetails = ({ details, closeModal, btnName }) => {
+    const { user } = React.useContext(AuthContext);
     return (
         <ModalBackground>
             <Container>
@@ -124,11 +127,11 @@ export const TicketDetails = ({details,closeModal}) => {
                     <Title>{details.nome}</Title>
                     <TicketInfo>
                         <strong>Organizador: </strong>
-                        {details.idOrganizador}
+                        {details.organizer.nome}
                     </TicketInfo>
                     <TicketInfo>
                         <strong>Data: </strong>
-                        {details.data} 
+                        {format(parseISO(details.data), 'dd/MM/yyyy')} 
                     </TicketInfo>
                     <TicketInfo>
                         <strong>Horário: </strong>
@@ -147,8 +150,8 @@ export const TicketDetails = ({details,closeModal}) => {
                         {details.preco}
                     </TicketInfo>
                     <ButtonContainer>
-                        <BuyButton>Comprar</BuyButton>
-                        <CancelButton onClick={() => {closeModal(false)}} >Cancelar</CancelButton>
+                        <BuyButton>{ btnName }</BuyButton>
+                        <CancelButton onClick={() => { closeModal(false) }} >Cancelar</CancelButton>
                     </ButtonContainer>
                 </TicketContent>
             </Container>

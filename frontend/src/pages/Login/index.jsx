@@ -7,7 +7,6 @@ import {
     ButtonGroup,
     ExtraText,
     TextLink,
-    CopyrightText,
     StyledContainer,
     ErrorMsg,
 } from "../../components/Styles";
@@ -32,8 +31,6 @@ const initialState = {
     email: '',
     senha: '',
 };
-
-
 
 const Login = () => {
     const { user, setUser } = React.useContext(AuthContext);
@@ -73,7 +70,7 @@ const Login = () => {
         e.preventDefault();
         const resultadoLogin = await loginApi(values.email, values.senha);
         
-        if(resultadoLogin){
+        if (resultadoLogin) {
             navigate('/');
         }
 

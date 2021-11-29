@@ -13,6 +13,7 @@ import { StyledContainer } from './components/Styles';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CreatedTickets from './pages/CreatedTickets/index.jsx';
 
 const App = () => {
   return (
@@ -23,7 +24,8 @@ const App = () => {
           <Route exact path='/signup' element={<Signup/>}/>
           <Route exact path='/login' element={<Login/>}/>
           <Route exact path='/profile' element={<Profile/>}/>
-          <Route exact path='/purchase-history' element={<PurchaseHistory/>}/>
+          <Route exact path='/purchase-history' element={<PurchaseHistory />} />
+           <Route exact path='/created-tickets' element={<CreatedTickets/>}/>
         </Routes>
       </div>
     </Router>

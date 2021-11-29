@@ -1,27 +1,22 @@
 //styled components
 import {
-    StyledFormButton,
     StyledFormsArea,
     StyledTitle,
-    colors,
     ButtonGroup,
-    ExtraText,
-    TextLink,
     StyledContainer,
 } from "../../components/Styles";
 import styled from 'styled-components'
+import React, { useState } from "react";
+import axios from "axios";
 
 //formik
 import { Formik, Form } from "formik";
 import { TextInput } from "../../components/FormLib";
-import * as Yup from 'yup';
 
 //icons
 import { FiMail, FiLock, FiUser, FiCalendar, FiPhone, FiCamera } from 'react-icons/fi';
 import {HiOutlineIdentification} from 'react-icons/hi'
-
-//Loader
-import Loader from "react-loader-spinner";
+import { format, parseISO } from 'date-fns';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -69,8 +64,75 @@ const SaveButton = styled.button`
     }
 
 `
-const EditProfile = ({userData,closeModal}) => {
-    const history = useNavigate();
+
+const EditProfile = ({ userData, closeModal }) => {
+    const initialState = {
+        email: "",
+        senha: "",
+        repetirSenha: "",
+        dataNascimento: "",
+        nome: "",
+        cpfCnpj: "",
+        telefoneContato: "",
+        role: "",
+    };
+
+    const [values, setValues] = useState(initialState);
+    const [error, setError] = useState(false);
+    const navigate = useNavigate();
+
+    const editApi = async (values, userData) => {
+        console.log(userData);
+        let resultado = false;
+        
+        let { email, senha, repetirSenha, dataNascimento,
+            nome, cpfCnpj, telefoneContato, role, fotoPerfil } = values;
+        
+
+        if (senha === repetirSenha) {
+            await axios.put(`http://localhost:8080/api/v1/users/${userData.id}`, {
+                role: userData.role,
+                nome: nome !== '' ? nome : userData.nome,
+                cpfCnpj: cpfCnpj !== '' ? cpfCnpj : userData.cpfCnpj,
+                telefoneContato: telefoneContato !== '' ? telefoneContato : userData.telefoneContato,
+                fotoPerfil: fotoPerfil !== '' ? fotoPerfil : userData.fotoPerfil,
+                dataNascimento: userData.dataNascimento,
+                email: email !== '' ? email : userData.email,
+                senha: senha !== '' ? senha : userData.senha,
+            }).then((res) => {
+                resultado = true;
+            }).catch((err) => {
+                console.log(err);
+                resultado = false;
+            });
+        }
+        else {
+            resultado = false;
+        }
+        return resultado;
+    };
+
+    function onChange(e){
+        const { name, value } = e.target;
+
+        setValues({
+            ...values,
+            [name]: value,
+        });
+    }
+
+     async function onSubmit(e){
+        e.preventDefault();
+        const resultadoRegistro = await editApi(values, userData);
+        
+        if(resultadoRegistro){
+            navigate('/');
+            navigate('/profile');
+        }
+
+        setError(true);
+        setValues(initialState);
+     }
 
     return (
         <StyledContainer>
@@ -84,24 +146,15 @@ const EditProfile = ({userData,closeModal}) => {
                 >
                     EDITAR PERFIL
                 </StyledTitle>
-                <Formik
-                    initialValues={{
-                        email: userData.email,
-                        senha: "",
-                        repetirSenha: "",
-                        dataNascimento: userData.dataNascimento,
-                        nome: userData.nome,
-                        cpfCpnj: userData.cpfCnpj,
-                        telefoneContato: userData.telefoneContato,
-                    }}
-                >
-                    <Form>
+                <Formik>
+                    <Form onSubmit={ onSubmit }>
                         <TextInput
                             name="nome"
                             type="text"
                             label="Nome"
                             placeholder="Digite seu nome"
-                            icon={<FiUser/>}
+                            icon={<FiUser />}
+                            onChange={ onChange }
                         />
 
                         <TextInput
@@ -109,7 +162,8 @@ const EditProfile = ({userData,closeModal}) => {
                             type="text"
                             label="E-mail"
                             placeholder="Digite seu e-mail"
-                            icon={<FiMail/>}
+                            icon={<FiMail />}
+                            onChange={ onChange }
                         />
 
                         <TextInput
@@ -117,7 +171,8 @@ const EditProfile = ({userData,closeModal}) => {
                             type="text"
                             label="Telefone"
                             placeholder="Digite seu telefone"
-                            icon={<FiPhone/>}
+                            icon={<FiPhone />}
+                            onChange={ onChange }
                         />
 
                         <TextInput
@@ -125,22 +180,16 @@ const EditProfile = ({userData,closeModal}) => {
                             type="text"
                             label="CPF ou CNPJ"
                             placeholder="Digite seu CPF/CNPJ"
-                            icon={<HiOutlineIdentification/>}
-                        />
-
-                        <TextInput
-                            name="dataNascimento"
-                            type="date"
-                            label="Data de nascimento"
-                            placeholder="Digite sua data de nascimento"
-                            icon={<FiCalendar/>}
+                            icon={<HiOutlineIdentification />}
+                            onChange={ onChange }
                         />
                         <TextInput
                             name="senha"
                             type="password"
                             label="Senha"
                             placeholder="Digite sua senha"
-                            icon={<FiLock/>}
+                            icon={<FiLock />}
+                            onChange={ onChange }
                         />
 
                         <TextInput
@@ -148,15 +197,17 @@ const EditProfile = ({userData,closeModal}) => {
                             type="password"
                             label="Confirmação senha"
                             placeholder="Confirme sua senha"
-                            icon={<FiLock/>}
+                            icon={<FiLock />}
+                            onChange={ onChange }
                         />
 
                         <TextInput
-                            name="foto_perfil"
+                            name="fotoPerfil"
                             type="text"
                             label="Foto de Perfil"
                             placeholder="Insira a URL da foto"
-                            icon={<FiCamera/>}
+                            icon={<FiCamera />}
+                            onChange={ onChange }
                         />
                         <ButtonGroup>
                             <SaveButton type="submit">

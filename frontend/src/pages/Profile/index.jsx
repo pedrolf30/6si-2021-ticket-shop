@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NavBar from "../../components/Navbar/index.jsx";
 import Footer from "../../components/Footer/index.jsx";
 import EditProfile from '../../components/EditProfile/index.jsx';
 import { AuthContext } from '../../providers/auth';
-
+import { format, parseISO } from 'date-fns';
+import axios from 'axios';
 const Container = styled.div`
     margin-top: 22px;
     display:flex;
@@ -71,8 +72,22 @@ const EditButton = styled.button`
 `
 
 function Profile() {
-    const {user} = React.useContext(AuthContext);
+    const { user } = React.useContext(AuthContext);
     const [ openModal, setOpenModal ] = useState(false);
+    const [ userInfo, setUserInfo ] = useState({});
+
+    const fetchUserInfo = async () => {
+        return axios.get(`http://localhost:8080/api/v1/users/${user.data.id}`)
+    };
+
+    useEffect(() => {
+        fetchUserInfo()
+            .then(res => {
+                setUserInfo(res.data);
+                console.log('s')
+            })
+            .catch(err => console.log(err))
+    }, [])
 
     return (
         <div>
@@ -82,29 +97,32 @@ function Profile() {
                 <Content>
                     <Title>MEU PERFIL</Title>
                     <Image 
-                        src={user.data.fotoPerfil === null 
-                        ? "https://api.ejcomp.com.br/members/1586969992913-perfilsemfoto.jpg"
-                        : user.data.fotoPerfil}
+                        src={userInfo.fotoPerfil}
                     />
                     <ProfileInfo>
                         <strong>Nome: </strong>
-                        {user.data.nome}
+                        {userInfo.nome}
                     </ProfileInfo>
                     <ProfileInfo>
                         <strong>Email: </strong>
-                        {user.data.email}
+                        {userInfo.email}
                     </ProfileInfo>
                     <ProfileInfo>
                         <strong>Contato: </strong>
-                        {user.data.telefoneContato}
+                        {userInfo.telefoneContato}
                     </ProfileInfo>
                     <ProfileInfo>
                         <strong>CPF/CNPJ: </strong>
-                        {user.data.cpfCnpj}
+                        {userInfo.cpfCnpj}
+                        { console.log(userInfo) }
                     </ProfileInfo>
                     <ProfileInfo>
                         <strong>Data de Nascimento: </strong>
-                        {user.data.dataNascimento}
+                        {format(parseISO(user.data.dataNascimento), 'dd/MM/yyyy')}
+                    </ProfileInfo>
+                    <ProfileInfo>
+                        <strong>Tipo de usuário: </strong>
+                        { user.data.role.role }
                     </ProfileInfo>
                     <ButtonContainer>
                         <EditButton onClick={() => {setOpenModal(true)}}>Editar</EditButton>
