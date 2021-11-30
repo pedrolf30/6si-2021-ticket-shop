@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { colors } from '../Styles';
 
 const Container = styled.div`
     background: #fff;
-    box-shadow: 0 0 10px #000;
+    box-shadow: 0 0 10px ${colors.theme};
     transition: transform 100ms ease-in-out;
     
     &:hover{

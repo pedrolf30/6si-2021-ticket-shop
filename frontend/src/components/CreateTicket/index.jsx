@@ -31,11 +31,11 @@ export const StyledContainer = styled.div`
 
 export const StyledFormsArea = styled.div`
     margin-top: 25px;
-    background-color: ${colors.light};
+    background-color: white;
     text-align: center;
     padding: 45px 55px;
     border-radius: 25px;
-    box-shadow: 0px 0px 8px 1px #000;
+    box-shadow: 0px 0px 8px 1px ${colors.theme};
 `;
 
 const Select = styled.select`
@@ -174,7 +174,7 @@ const CreateTicket = ({ closeModal }) => {
         
         if(resultadoRegistro){
             navigate('/');
-            navigate('/profile');
+            navigate('/created-tickets');
         }
 
         setError(true);

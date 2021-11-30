@@ -3,8 +3,8 @@ import styled from 'styled-components';
 //React router dom
 import { Link } from 'react-router-dom';
 export const colors = {
-    light: '#f5f5f5',
-    theme: "#808080",
+    light: '#fff',
+    theme: "#005eff",
     dark: "#2e2e2e",
     red: "#FF0000",
     black: "#000",
@@ -24,7 +24,7 @@ export const StyledContainer = styled.div`
 export const StyledTitle = styled.h2`
     font-size: ${(props) => props.size}px;
     text-align: center;
-    color: ${(props) => props.color ? props.color : colors.primary};
+    color: '${(props) => props.color ? props.color : colors.primary}';
     padding: 5px;
     margin-bottom: 20px;
 `;
@@ -92,11 +92,11 @@ export const StyledLabel = styled.p`
 `;
 
 export const StyledFormsArea = styled.div`
-    background-color: ${colors.light};
+    background-color: white;
     text-align: center;
     padding: 45px 55px;
     border-radius: 25px;
-    box-shadow: 0px 0px 8px 1px #000;
+    box-shadow: 0px 0px 8px 1px ${colors.theme};
 `;
 
 export const StyledFormButton = styled.button`
@@ -112,7 +112,7 @@ export const StyledFormButton = styled.button`
     outline: 0;
 
     &:hover{
-        background-color: ${colors.dark};
+        background-color: ${colors.theme};
         color: ${colors.light};
         cursor: pointer;
     }

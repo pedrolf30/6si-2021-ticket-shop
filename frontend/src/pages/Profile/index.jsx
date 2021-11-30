@@ -6,6 +6,7 @@ import EditProfile from '../../components/EditProfile/index.jsx';
 import { AuthContext } from '../../providers/auth';
 import { format, parseISO } from 'date-fns';
 import axios from 'axios';
+import { colors } from '../../components/Styles.js';
 const Container = styled.div`
     margin-top: 22px;
     display:flex;
@@ -19,7 +20,7 @@ const Content = styled.div`
     height: 100%;
     border-radius: 25px;
     background-color: white;
-    box-shadow: 0 0 10px #000;
+    box-shadow: 0 0 10px ${colors.theme};
     flex-direction: column;
     padding 25px;
 `

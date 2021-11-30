@@ -15,7 +15,13 @@ const Title = styled.p`
     font-weight: bold;
     margin: 5px;
 `
-
+const PContainer = styled.div`
+    flex: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+`
 function PurchaseHistory() {
     const [tickets, setTickets] = useState([]);
     const [allTickets, setAllTickets] = useState([]);
@@ -54,19 +60,19 @@ function PurchaseHistory() {
     }
 
     const handleLoadTickets = useCallback(async (page, ticketsPerPage) => {
-        /* const tickets = ticketList;
+        const tickets = ticketList.filter(x => x.nome.includes('Fla'));
 
         setTickets(tickets.slice(page, ticketsPerPage));
-        setAllTickets(tickets); */
+        setAllTickets(tickets);
     }, [])
 
     const loadMoreTickets = async () => {
-        /* const nextPage = page + ticketsPerPage;
+        const nextPage = page + ticketsPerPage;
         const nextTickets = allTickets.slice(nextPage, (nextPage + ticketsPerPage));
         tickets.push(...nextTickets);
 
         setTickets(tickets);
-        setPage(nextPage); */
+        setPage(nextPage);
     }
 
     const handleChange = (e) => {
@@ -102,7 +108,10 @@ function PurchaseHistory() {
                     />
                 )}
                 {filterIntersection.length === 0 && (
-                    <p>Nenhum ticket foi comprado por você ;-;</p>
+                    <PContainer>
+                        <p>Nenhum ticket foi comprado por você ;-;</p>
+                    </PContainer>
+                    
                 )}
             </div>
             {openModal && <TicketDetails details={ticketDetail} closeModal={setOpenModal}/>}

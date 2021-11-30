@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../providers/auth';
 import { useNavigate } from 'react-router-dom';
+import { colors } from '../Styles';
 
 const Container = styled.div`
-    height: 60px;
-    background-color: #fff;
+    height: 80px;
+    background-color:${colors.theme};
     border-bottom: 2px solid #000;
 `
 //#df0000
@@ -26,9 +27,8 @@ const Center = styled.div`
     text-align: center;
 `
 
-const Logo = styled.h1`
-    font-weight: bold;
-    color: #000;
+const Logo = styled.img`
+    width: 150px;
     cursor: pointer;
 `
 
@@ -44,7 +44,7 @@ const MenuItem = styled(Link)`
     font-weight: bold;
     cursor: pointer;
     margin-left: 25px;
-    color: #000;
+    color: #fff;
     text-decoration: none;
 `
 
@@ -69,7 +69,7 @@ const NavBar = () => {
             <Wrapper>
                 <Left></Left>
                 <Center>
-                    <Logo onClick={ onClick }>INGRESSOS</Logo>
+                    <Logo onClick={ onClick } src="/logo.png"/>
                 </Center>
                 <Right>
                     { !isLogged &&

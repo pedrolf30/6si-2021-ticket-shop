@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { colors } from '../Styles';
 
 const Container = styled.footer`
     padding-top: 15px;
     padding-bottom: 15px;
-    background-color: #fff;
+    background-color:${colors.theme};
     font-weight: normal;
     font-size: 12px;
     line-height: 16px;
@@ -19,14 +20,14 @@ const Container = styled.footer`
 
 const CopyrightText = styled.p`
     font-size: 14px;
-    color: #000;
+    color: #fff;
 `
 
 const AuthorRedirect = styled.a`
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
-    color: #000;
+    color: #fff;
     text-decoration: none;
     margin-left: 5px;
 `

@@ -1,7 +1,10 @@
 export const ticketList = [
     {
         idIngresso: 1,
-        idOrganizador: 23,
+        organizer: {
+            id: 4,
+            nome: 'leoncião da massa'
+        },
         nome: 'Show do BTS',
         data: '19/12/2021',
         horario: '15:00',
@@ -16,7 +19,10 @@ export const ticketList = [
     },
     {
         idIngresso: 2,
-        idOrganizador: 12,
+        organizer: {
+            id: 6,
+            nome: 'Conmebol Libertadores'
+        },
         nome: 'Palmeiras X Flamengo',
         data: '27/11/2021',
         horario: '17:00',
@@ -89,4 +95,32 @@ export const ticketList = [
         fotoEvento: 'https://androoapp.com/wp-content/uploads/2021/05/image.png',
         categoria: 'Esporte',
     },
+    {
+        "id": 6,
+        "organizer": {
+            "id": 3,
+            "role": {
+                "id": 1,
+                "role": "Vendedor"
+            },
+            "nome": "Leoncião da massa",
+            "cpfCnpj": "12345678921",
+            "telefoneContato": "11987875476",
+            "fotoPerfil": "http://pm1.narvii.com/6543/7ef43f546272d309c4f9ff22a6e673a56d81d132_00.jpg",
+            "dataNascimento": "1946-07-12T00:00:00.000+00:00",
+            "email": "leoncio@gmail.com",
+            "senha": "603494fec14a5c03726e02928d9dc2e0"
+        },
+        "nome": "Leoncião da massa",
+        "data": "2022-03-11T02:30:00.000+00:00",
+        "horario": "23:30:00",
+        "endereco": "Praça das bandeiras",
+        "preco": 12.5,
+        "descricao": "Bailão rave funk do leoncio",
+        "qtdIngressos": 150,
+        "status": "DISPONÍVEL",
+        "porcentagemDesconto": 10,
+        "fotoEvento": "https://django-metabuscador.s3.amazonaws.com/static/home/images/no-photo.png",
+        "categoria": "Musica"
+    }
 ]

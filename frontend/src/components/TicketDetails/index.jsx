@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { format, parseISO } from 'date-fns';
 import { AuthContext } from '../../providers/auth';
+import { useNavigate } from 'react-router';
+import { colors } from '../Styles';
 
 const ModalBackground = styled.div`
     margin-top: 22px;
@@ -15,7 +17,7 @@ const Container = styled.div`
     height: 100%;
     border-radius: 25px;
     background-color: white;
-    box-shadow: 0 0 10px #000;
+    box-shadow: 0 0 10px ${colors.theme};
     display: flex;
     flex-direction: column;
     padding 25px;
@@ -116,6 +118,7 @@ const CancelButton = styled.button`
 
 export const TicketDetails = ({ details, closeModal, btnName }) => {
     const { user } = React.useContext(AuthContext);
+    const navigate = useNavigate();
     return (
         <ModalBackground>
             <Container>
@@ -131,7 +134,7 @@ export const TicketDetails = ({ details, closeModal, btnName }) => {
                     </TicketInfo>
                     <TicketInfo>
                         <strong>Data: </strong>
-                        {format(parseISO(details.data), 'dd/MM/yyyy')} 
+                        {details.data} 
                     </TicketInfo>
                     <TicketInfo>
                         <strong>Horário: </strong>
@@ -150,7 +153,7 @@ export const TicketDetails = ({ details, closeModal, btnName }) => {
                         {details.preco}
                     </TicketInfo>
                     <ButtonContainer>
-                        <BuyButton>{ btnName }</BuyButton>
+                        <BuyButton onClick={() => { navigate('/purchase-history') }}>{ btnName }</BuyButton>
                         <CancelButton onClick={() => { closeModal(false) }} >Cancelar</CancelButton>
                     </ButtonContainer>
                 </TicketContent>
