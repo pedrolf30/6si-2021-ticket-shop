@@ -54,12 +54,12 @@ public class PurchaseTicketService {
 
     @Transactional
     public ResponseEntity<PurchaseTicket> createPurchaseTicket(PurchaseTicket purchaseTicket) throws Exception {
-        purchaseTicket.getTicket().setQtdIngressos(purchaseTicket.getTicket().getQtdIngressos() - purchaseTicket.getQuantidade());
+        /*purchaseTicket.getTicket().setQtdIngressos(purchaseTicket.getTicket().getQtdIngressos() - purchaseTicket.getQuantidade());
 
         if (purchaseTicket.getTicket().getQtdIngressos() >= 0)
             purchaseTicket.setTicket(ticketService.updateTicket(purchaseTicket.getTicket().getId(), purchaseTicket.getTicket()).getBody());
         else
-            throw new TicketAmountNotAvailableException(purchaseTicket.getQuantidade());
+            throw new TicketAmountNotAvailableException(purchaseTicket.getQuantidade());*/
 
         PurchaseTicket savedPurchaseTicket = purchaseTicketRepository.save(purchaseTicket);
 

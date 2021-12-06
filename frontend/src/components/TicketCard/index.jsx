@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../Styles';
+import { format, parseISO } from 'date-fns';
 
 const Container = styled.div`
     background: #fff;
@@ -66,7 +67,7 @@ export const TicketCard = ({item, open, details}) => {
             <TicketContent>
                 <Image src={item.fotoEvento} />
                 <Title>{item.nome}</Title>
-                <TicketInfo>{item.data} - {item.horario}</TicketInfo>
+                <TicketInfo>{format(parseISO(item.data), 'dd/MM/yyyy')} - {item.horario}</TicketInfo>
                 <TicketInfo><strong>R${item.preco}</strong></TicketInfo>
                 <ButtonContainer>
                     <SeeMoreButton to="" onClick={() => {open(); details(item)}}>Ver mais</SeeMoreButton>

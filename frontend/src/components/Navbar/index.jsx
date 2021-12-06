@@ -82,7 +82,7 @@ const NavBar = () => {
                         <>
                             <MenuItem to="/profile">MINHA CONTA</MenuItem>
                             <MenuItem to="/purchase-history">HISTÓRICO COMPRAS</MenuItem>
-                            <MenuItem to="/shopping-kart">CARRINHO</MenuItem>
+                            <MenuItem to="/shopping-cart">CARRINHO</MenuItem>
                             <MenuItem 
                                 to="/" 
                                 onClick={() => {

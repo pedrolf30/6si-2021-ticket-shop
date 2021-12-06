@@ -84,10 +84,6 @@ const Signup = () => {
         let { email, senha, repetirSenha, dataNascimento,
             nome, cpfCnpj, telefoneContato, role } = values;
 
-        
-        
-        console.log(values, roleJson);
-
         if (senha === repetirSenha) {
             await axios.post('http://localhost:8080/api/v1/users', {
                 role: roleJson,

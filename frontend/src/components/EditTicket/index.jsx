@@ -102,7 +102,7 @@ const SaveButton = styled.button`
 
 `
 
-const CreateTicket = ({ closeModal }) => {
+const EditTicket = ({ details, closeModal }) => {
     const initialState = {
         nome: "",
         data: "",
@@ -123,30 +123,27 @@ const CreateTicket = ({ closeModal }) => {
     const [error, setError] = useState(false);
     const navigate = useNavigate();
 
-    const createApi = async (values, userData) => {
+    const editApi = async (values, ticketData) => {
         let resultado = false;
         
-        const organizerIdJson = {
-            id: userData.id,
-        };
 
         let { nome, data, horario, endereco, preco, descricao, qtdIngressos,
-                porcentagemDesconto, fotoEvento, categoria } = values;
+                porcentagemDesconto, fotoEvento, categoria, status } = values;
         
 
-        await axios.post(`http://localhost:8080/api/v1/tickets`, {
-            organizer: organizerIdJson,
-            nome,
-            data,
-            horario,
-            endereco,
-            preco,
-            descricao,
-            qtdIngressos,
-            status: 'DISPONÍVEL',
-            porcentagemDesconto,
+        await axios.put(`http://localhost:8080/api/v1/tickets/${ticketData.id}`, {
+            organizer: ticketData.organizer,
+            nome: nome !== null ? nome : ticketData.nome,
+            data: data !== null ? data : ticketData.data,
+            horario: horario !== null ? horario : ticketData.horario,
+            endereco: endereco !== null ? endereco : ticketData.endereco,
+            preco: preco !== null ? preco : ticketData.preco,
+            descricao: descricao !== null ? descricao : ticketData.descricao,
+            qtdIngressos: qtdIngressos !== null ? qtdIngressos : ticketData.qtdIngressos,
+            status: status !== null ? status : ticketData.status,
+            porcentagemDesconto: porcentagemDesconto !== null ? porcentagemDesconto : ticketData.porcentagemDesconto,
             fotoEvento: fotoEvento !== '' ? fotoEvento : "https://django-metabuscador.s3.amazonaws.com/static/home/images/no-photo.png",
-            categoria,
+            categoria: categoria !== null ? categoria : ticketData.categoria,
         }).then((res) => {
             resultado = true;
         }).catch((err) => {
@@ -166,18 +163,18 @@ const CreateTicket = ({ closeModal }) => {
         });
     }
 
-     async function onSubmit(e){
-        e.preventDefault();
-         const resultadoRegistro = await createApi(values, user.data);
-        
-        if(resultadoRegistro){
-            navigate('/');
-            navigate('/created-tickets');
-        }
+    async function onSubmit(e){
+    e.preventDefault();
+        const resultadoRegistro = await editApi(values, details);
+    
+    if(resultadoRegistro){
+        navigate('/');
+        navigate('/created-tickets');
+    }
 
-        setError(true);
-        setValues(initialState);
-     }
+    setError(true);
+    setValues(initialState);
+    }
 
     return (
         <StyledContainer>
@@ -189,7 +186,7 @@ const CreateTicket = ({ closeModal }) => {
                     color="#000"
                     size={30}
                 >
-                    CADASTRAR
+                    EDITAR
                 </StyledTitle>
                 <Formik>
                     <Form onSubmit={ onSubmit }>
@@ -285,6 +282,13 @@ const CreateTicket = ({ closeModal }) => {
                             <Option value="Cinema">Cinema</Option>
                             <Option value="Teatro">Teatro</Option>
                         </Select>
+                        <StyledLabel>Status</StyledLabel>
+                        <Select name="status" onChange={ onChange }>
+                            <Option value="" defaultValue>Status</Option>
+                            <Option value="DISPONÍVEL">Disponível</Option>
+                            <Option value="INDISPONÍVEL">Indisponível</Option>
+                            <Option value="ESGOTADO">Esgotado</Option>
+                        </Select>
                         <ButtonGroup>
                             <SaveButton type="submit">
                                 Salvar
@@ -297,4 +301,4 @@ const CreateTicket = ({ closeModal }) => {
     );
 }
 
-export default CreateTicket;
+export default EditTicket;

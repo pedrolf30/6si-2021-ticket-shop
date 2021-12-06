@@ -85,7 +85,6 @@ function Profile() {
         fetchUserInfo()
             .then(res => {
                 setUserInfo(res.data);
-                console.log('s')
             })
             .catch(err => console.log(err))
     }, [])
@@ -115,7 +114,6 @@ function Profile() {
                     <ProfileInfo>
                         <strong>CPF/CNPJ: </strong>
                         {userInfo.cpfCnpj}
-                        { console.log(userInfo) }
                     </ProfileInfo>
                     <ProfileInfo>
                         <strong>Data de Nascimento: </strong>

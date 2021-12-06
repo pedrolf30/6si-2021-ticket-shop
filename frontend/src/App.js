@@ -14,6 +14,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CreatedTickets from './pages/CreatedTickets/index.jsx';
+import ShoppingCart from './pages/ShoppingCart/index.jsx';
 
 const App = () => {
   return (
@@ -23,9 +24,10 @@ const App = () => {
           <Route exact path='/' element={<Home />} />
           <Route exact path='/signup' element={<Signup/>}/>
           <Route exact path='/login' element={<Login/>}/>
-          <Route exact path='/profile' element={<Profile/>}/>
+          <Route exact path='/profile' element={<Profile />} />
+          <Route exact path='/shopping-cart' element={<ShoppingCart/>}/>
           <Route exact path='/purchase-history' element={<PurchaseHistory />} />
-           <Route exact path='/created-tickets' element={<CreatedTickets/>}/>
+          <Route exact path='/created-tickets' element={<CreatedTickets/>}/>
         </Routes>
       </div>
     </Router>

@@ -6,7 +6,8 @@ import NavBar from "../../components/Navbar/index.jsx";
 import TicketDetails from "../../components/TicketDetails/index.jsx";
 import Tickets from "../../components/Tickets/index.jsx";
 import { LoadMoreButton } from "../../components/LoadMoreButton/index.jsx";
-import { ticketList } from '../../data';
+import axios from 'axios';
+import { AuthContext } from '../../providers/auth.js';
 
 
 const Title = styled.p`
@@ -23,6 +24,8 @@ const PContainer = styled.div`
     margin-right: 20px;
 `
 function PurchaseHistory() {
+    const { user } = React.useContext(AuthContext);
+
     const [tickets, setTickets] = useState([]);
     const [allTickets, setAllTickets] = useState([]);
     const [page, setPage] = useState(0);
@@ -32,6 +35,22 @@ function PurchaseHistory() {
     const [ openModal, setOpenModal ] = useState(false);
     const [ticketDetail, setTicketDetail] = useState([]);
 
+     const fetchTicketInfo = async () => {
+        return axios.get(`http://localhost:8080/api/v1/tickets`)
+    };
+
+    useEffect(() => {
+        fetchTicketInfo()
+            .then(res => {
+                setTickets(res.data);
+                setAllTickets(res.data);
+            })
+            .catch(err => console.log(err))
+    }, []);
+
+    if (tickets.length > 0) {
+        
+    }
     const filteredBySearch = !!searchValue
       ? allTickets.filter(ticket => {
         return ticket.nome.toLowerCase().includes(searchValue.toLowerCase());
@@ -60,11 +79,18 @@ function PurchaseHistory() {
     }
 
     const handleLoadTickets = useCallback(async (page, ticketsPerPage) => {
-        const tickets = ticketList.filter(x => x.nome.includes('Fla'));
-
-        setTickets(tickets.slice(page, ticketsPerPage));
-        setAllTickets(tickets);
+        const list = [];
+        if (tickets.length > 0) {
+            for (let i = 0; i < tickets.length; i++){
+                const ticket = tickets[i];
+                list.push(ticket.ticket);
+            }
+        }
+        setTickets(list/*.slice(page, ticketsPerPage)*/);
+        setAllTickets(list);
     }, [])
+
+    console.log(filterIntersection);
 
     const loadMoreTickets = async () => {
         const nextPage = page + ticketsPerPage;
@@ -109,7 +135,7 @@ function PurchaseHistory() {
                 )}
                 {filterIntersection.length === 0 && (
                     <PContainer>
-                        <p>Nenhum ticket foi comprado por você ;-;</p>
+                        <p>Nenhum ingresso foi comprado por você ;-;</p>
                     </PContainer>
                     
                 )}

@@ -6,6 +6,16 @@ import { LoadMoreButton } from "../../components/LoadMoreButton/index.jsx";
 import NavBar from "../../components/Navbar/index.jsx";
 import Tickets from "../../components/Tickets/index.jsx";
 import { ticketList } from '../../data';
+import axios from "axios";
+import styled from "styled-components";
+
+const PContainer = styled.div`
+    flex: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+`
 
 const Home = () => {
     const [tickets, setTickets] = useState([]);
@@ -16,6 +26,19 @@ const Home = () => {
     const [categoryValue, setCategoryValue] = useState('');
     const [ openModal, setOpenModal ] = useState(false);
     const [ticketDetail, setTicketDetail] = useState([]);
+
+    const fetchTicketInfo = async () => {
+        return axios.get(`http://localhost:8080/api/v1/tickets`)
+    };
+
+    useEffect(() => {
+        fetchTicketInfo()
+            .then(res => {
+                setTickets(res.data);
+                setAllTickets(res.data);
+            })
+            .catch(err => console.log(err))
+    }, []);
 
     const filteredBySearch = !!searchValue
       ? allTickets.filter(ticket => {
@@ -44,11 +67,10 @@ const Home = () => {
          filterIntersection = tickets
     }
 
-    const handleLoadTickets = useCallback(async (page, ticketsPerPage) => {
-        const tickets = ticketList;
+    console.log(tickets);
 
+    const handleLoadTickets = useCallback(async (page, ticketsPerPage) => {
         setTickets(tickets.slice(page, ticketsPerPage));
-        setAllTickets(tickets);
     }, [])
 
     const loadMoreTickets = async () => {
@@ -93,13 +115,15 @@ const Home = () => {
                     />
                 )}
                 {filterIntersection.length === 0 && (
-                    <p>Nenhum ticket foi encontrado ;-;</p>
+                    <PContainer>
+                        <p>Nenhum ingresso foi encontrado ;-;</p>
+                    </PContainer>
                 )}
             </div>
             {openModal && <TicketDetails
                 details={ticketDetail}
-                closeModal={setOpenModal}
-                btnName={ "Comprar" }
+                closeDetailModal={setOpenModal}
+                btnName={"Comprar"}
             />}
             {!openModal && <LoadMoreButton onClick={loadMoreTickets} disabled={noMoreTicketsToLoad}/>}
             <Footer/>

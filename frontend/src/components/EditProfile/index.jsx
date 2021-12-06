@@ -82,7 +82,6 @@ const EditProfile = ({ userData, closeModal }) => {
     const navigate = useNavigate();
 
     const editApi = async (values, userData) => {
-        console.log(userData);
         let resultado = false;
         
         let { email, senha, repetirSenha, dataNascimento,

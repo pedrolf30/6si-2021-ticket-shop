@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import CreateTicket from '../../components/CreateTicket/index.jsx';
 import { AuthContext } from '../../providers/auth.js';
 import axios from 'axios';
+import EditTicket from '../../components/EditTicket/index.jsx';
 
 const Title = styled.p`
     text-align: center;
@@ -64,18 +65,21 @@ function CreatedTickets() {
     const [searchValue, setSearchValue] = useState('');
     const [categoryValue, setCategoryValue] = useState('');
     const [openCreateModal, setOpenCreateModal] = useState(false);
-    const [ openDetailModal, setOpenDetailModal ] = useState(false);
+    const [openDetailModal, setOpenDetailModal] = useState(false);
+    const [openEditModal, setOpenEditModal ] = useState(false);
+
 
     const [ticketDetail, setTicketDetail] = useState([]);
 
-    const fetchUserInfo = async () => {
+    const fetchTicketInfo = async () => {
         return axios.get(`http://localhost:8080/api/v1/tickets/organizers/${user.data.id}`)
     };
 
     useEffect(() => {
-        fetchUserInfo()
+        fetchTicketInfo()
             .then(res => {
                 setTickets(res.data);
+                setAllTickets(res.data);
             })
             .catch(err => console.log(err))
     }, []);
@@ -106,12 +110,9 @@ function CreatedTickets() {
     else if (searchValue === '' && categoryValue === '') {
          filterIntersection = tickets
     }
-
+    
     const handleLoadTickets = useCallback(async (page, ticketsPerPage) => {
-        const tks = tickets;
-
-        setTickets(tks.slice(page, ticketsPerPage));
-        setAllTickets(tks);
+        setTickets(tickets.slice(page, ticketsPerPage));
     }, [])
 
     const loadMoreTickets = async () => {
@@ -172,10 +173,12 @@ function CreatedTickets() {
                 )}
             </div>
             {openCreateModal && <CreateTicket closeModal={setOpenCreateModal} />}
-            {openDetailModal && <TicketDetails
+            {openEditModal && <EditTicket closeModal={setOpenEditModal} details={ticketDetail} />}
+            {openDetailModal && !openEditModal && <TicketDetails
                 details={ticketDetail}
-                closeModal={setOpenDetailModal}
-                btnName={ "Editar" }
+                closeDetailModal={setOpenDetailModal}
+                closeEditModal={setOpenEditModal}
+                btnName={"Editar"}
             />}
             {(!openCreateModal && !openDetailModal) && <LoadMoreButton onClick={loadMoreTickets} disabled={noMoreTicketsToLoad} />}
             
