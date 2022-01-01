@@ -45,7 +45,7 @@ Também é preciso ter instalado o JDK na versão 11 para executar o back-end do
 Clonar repositório
 
 ```sh
-git clone https://github.com/pedrolf30/venda-ingressos.git
+git clone https://github.com/pedrolf30/ticket-shop.git
 ```
 
 ### Executar backend
