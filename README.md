@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/pedrolf30/venda-ingressos/tree/master/images/logo.png">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.png" alt="Logo" width="160" height="100">
   </a>
 
   <h3 align="center">TicketShop</h3>
@@ -13,7 +13,9 @@
 
 ## Sobre o projeto
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Pagina inicial][home-page]]
+[![Pagina de login][login-page]]
+[![Carrinho][shopping-cart-page]]
 
 TicketShop é um projeto desenvolvido para a matéria <strong>Projeto Integrador de Programação e Análise</strong> do 6º semestre de Sistemas de Informação no UNASP-HT
 
