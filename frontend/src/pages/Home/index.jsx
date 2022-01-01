@@ -5,7 +5,6 @@ import TicketDetails from "../../components/TicketDetails/index.jsx";
 import { LoadMoreButton } from "../../components/LoadMoreButton/index.jsx";
 import NavBar from "../../components/Navbar/index.jsx";
 import Tickets from "../../components/Tickets/index.jsx";
-import { ticketList } from '../../data';
 import axios from "axios";
 import styled from "styled-components";
 
@@ -66,9 +65,7 @@ const Home = () => {
     else if (searchValue === '' && categoryValue === '') {
          filterIntersection = tickets
     }
-
-    console.log(tickets);
-
+    
     const handleLoadTickets = useCallback(async (page, ticketsPerPage) => {
         setTickets(tickets.slice(page, ticketsPerPage));
     }, [])

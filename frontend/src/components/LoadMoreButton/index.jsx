@@ -16,7 +16,7 @@ const LoadMore = styled.button`
     color: ${colors.theme};
     padding: 15px 30px;
     cursor: pointer;
-
+    
     &:disabled{
         background-color: #888;
         cursor: not-allowed;

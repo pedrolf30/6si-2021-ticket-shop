@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Filter } from "../../components/Filter/index.jsx";
 import Footer from "../../components/Footer/index.jsx";
 import NavBar from "../../components/Navbar/index.jsx";
-import TicketDetails from "../../components/TicketDetails/index.jsx";
-import Tickets from "../../components/Tickets/index.jsx";
+import TicketDetails from "../../components/TicketDetailsHistory/index.jsx";
+import Tickets from "../../components/TicketsHistory/index.jsx";
 import { LoadMoreButton } from "../../components/LoadMoreButton/index.jsx";
 import axios from 'axios';
 import { AuthContext } from '../../providers/auth.js';
@@ -36,7 +36,7 @@ function PurchaseHistory() {
     const [ticketDetail, setTicketDetail] = useState([]);
 
      const fetchTicketInfo = async () => {
-        return axios.get(`http://localhost:8080/api/v1/tickets`)
+        return axios.get(`http://localhost:8080/api/v1/purchases/tickets/purchasers/${user.data.id}`)
     };
 
     useEffect(() => {
@@ -90,8 +90,6 @@ function PurchaseHistory() {
         setAllTickets(list);
     }, [])
 
-    console.log(filterIntersection);
-
     const loadMoreTickets = async () => {
         const nextPage = page + ticketsPerPage;
         const nextTickets = allTickets.slice(nextPage, (nextPage + ticketsPerPage));
@@ -140,7 +138,7 @@ function PurchaseHistory() {
                     
                 )}
             </div>
-            {openModal && <TicketDetails details={ticketDetail} closeModal={setOpenModal}/>}
+            {openModal && <TicketDetails details={ticketDetail}/>}
             {!openModal && <LoadMoreButton onClick={loadMoreTickets} disabled={noMoreTicketsToLoad}/>}
             <Footer/> 
         </div>

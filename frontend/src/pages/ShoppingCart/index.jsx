@@ -219,8 +219,6 @@ function ShoppingCart() {
             id: idTicket,
         };
         
-        console.log(idPurchase);
-
         await axios.post(`http://localhost:8080/api/v1/purchases/tickets`, {
             purchase: pId,
             ticket: ticketId,
