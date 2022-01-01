@@ -13,10 +13,6 @@
 
 ## Sobre o projeto
 
-[![Pagina inicial][home-page]]
-[![Pagina de login][login-page]]
-[![Carrinho][shopping-cart-page]]
-
 TicketShop é um projeto desenvolvido para a matéria <strong>Projeto Integrador de Programação e Análise</strong> do 6º semestre de Sistemas de Informação no UNASP-HT
 
 O projeto consiste em um site onde usuários podem colocar à venda os ingressos de seus eventos ou comprar os ingressos disponibilizados por outros usuários.
@@ -87,6 +83,3 @@ Pedro L. Ferrareso - [Github](https://github.com/pedrolf30)
 
 Samuel P. A. Cezar - [Linkedin](https://www.linkedin.com/in/samuel-paim-araujo-cezar/)
 
-[login-page]: https://github.com/pedrolf30/venda-ingressos/tree/master/images/login.png
-[home-page]: https://github.com/pedrolf30/venda-ingressos/tree/master/images/home.png
-[shopping-cart-page]: https://github.com/pedrolf30/venda-ingressos/tree/master/images/shopping-cart.png
